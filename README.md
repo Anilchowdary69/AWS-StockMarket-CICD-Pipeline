@@ -83,7 +83,7 @@ The pipeline deploys a complete stock market analytics pipeline on every push:
 Terraform state is stored in an S3 backend so the pipeline always knows what infrastructure exists in AWS:
 
 ```
-s3://stock-market-terraform-state-33454/cicd-pipeline/terraform.tfstate
+s3://stock-market-terraform-state-6969/cicd-pipeline/terraform.tfstate
 ```
 
 This solves a critical problem — without remote state every pipeline run starts blind and tries to recreate resources that already exist. With S3 remote state Terraform reads the current state before every run and only makes necessary changes.
