@@ -12,8 +12,6 @@ The entire pipeline runs on GitHub's servers with no infrastructure to manage.
 
 ---
 
----
-
 ## Architecture
 
 ![Architecture Diagram](architecture-diagram.png)
