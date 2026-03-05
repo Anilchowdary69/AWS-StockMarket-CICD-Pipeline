@@ -12,29 +12,11 @@ The entire pipeline runs on GitHub's servers with no infrastructure to manage.
 
 ---
 
-## How It Works
+---
 
-```
-Developer pushes code to main branch
-        |
-        v
-GitHub Actions triggers automatically
-        |
-        |---> CI STAGE
-        |     Install Python and dependencies
-        |     Run 5 unit tests on Lambda code
-        |     If any test fails — pipeline stops here
-        |
-        |---> CD STAGE (only runs if all tests pass)
-              Zip Lambda functions automatically
-              Configure AWS credentials from GitHub Secrets
-              Terraform Init — download AWS provider
-              Terraform Plan — preview changes
-              Terraform Apply — deploy to AWS
-                    |
-                    v
-              Infrastructure live on AWS
-```
+## Architecture
+
+![Architecture Diagram](architecture-diagram.png)
 
 ---
 
@@ -120,28 +102,6 @@ AWS credentials are never hardcoded in the pipeline. They are stored as encrypte
 | AWS_SECRET_ACCESS_KEY | IAM user secret key for AWS authentication |
 
 GitHub Secrets are encrypted at rest and never visible in logs or code. Anyone who clones this repo cannot access AWS without these secrets.
-
----
-
-## Project Structure
-
-```
-aws-cicd-pipeline/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # CI/CD pipeline definition
-├── lambda/
-│   ├── lambda_function.py      # ProcessStockData — Kinesis to DynamoDB and S3
-│   └── stock_trend_alert.py    # StockTrendAnalysis — SMA crossover detection
-├── terraform/
-│   ├── main.tf                 # All AWS resources
-│   ├── variables.tf            # Configurable variables
-│   ├── outputs.tf              # Post-deployment outputs
-│   └── providers.tf            # AWS provider and S3 backend config
-├── tests/
-│   └── test_lambda.py          # Unit tests that run before every deployment
-└── README.md
-```
 
 ---
 
